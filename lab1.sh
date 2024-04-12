@@ -1,25 +1,27 @@
 #!/bin/bash
 
-SOURCEDIR=${1:-lab_uno}
+# creating variables and default names
+SOURCE_DIR=${1:-lab_uno}
 RM_LIST=${2:-2remove}
 TARGET_DIR=${3:-bakap}
 
-if [[ ! -d "${DIR}" ]]; then
-    mkdir "${DIR}"
-    echo "Utworzono ${DIR}"
+# create target folder if dont exist
+if [[ ! -d "${TARGET_DIR}" ]]; then
+    mkdir "${TARGET_DIR}"
+    echo "Utworzono ${TARGET_DIR}"
 fi
 
-ITEMS=$(cat ${RM_LIST})
+# delete by RM_LIST
+ITEMS=$(cat "${SOURCE_DIR}/${RM_LIST}")
 for ITEM in ${ITEMS}; do
-    echo "Pracuje nad: ${ITEM}"
-    if [[ -f  "${SOURCE_DIR}/${ITEM}" ]]; then
-        rm "${SOURCE_DIR}/${ITEM}"
+    if [[ -d  "${SOURCE_DIR}/${ITEM}" ]]; then
+        rm -rf "${SOURCE_DIR}/${ITEM}"
     fi
 done
 
-ITEMS=$(ls ${SOURCE_DIR})
+# move regular files AND copy folders
+ITEMS=$(ls "${SOURCE_DIR}")
 for ITEM in ${ITEMS}; do
-    echo "Pracuje nad: ${ITEM}"
     if [[ -f  "${SOURCE_DIR}/${ITEM}" ]]; then
         mv "${SOURCE_DIR}/${ITEM}" "${TARGET_DIR}"
     elif [[ -d  "${SOURCE_DIR}/${ITEM}" ]]; then
@@ -27,27 +29,29 @@ for ITEM in ${ITEMS}; do
     fi
 done
 
-ITEMS=$(ls -a ${SOURCE_DIR})
+# count survivors
+ITEMS=$(ls "${SOURCE_DIR}")
 COUNTER=0
 for ITEM in ${ITEMS}; do
     COUNTER=$((COUNTER + 1))
 done
 
-if [["${COUNTER}" -gt 0 ]]; then
+if [[ ${COUNTER} -gt 0 ]]; then
     echo "jeszcze coś zostało"
 else
     echo "tu był Kononowicz, nie będzie niczego"
 fi
-if [["${COUNTER}" -ge 2 ]]; then
-    echo "zostały co najmniej 2 plik"
+if [[ ${COUNTER} -ge 2 ]]; then
+    echo "zostały co najmniej 2 pliki"
 fi
-if [["${COUNTER}" -gt 4 ]]; then
+if [[ ${COUNTER} -gt 4 ]]; then
     echo "zostało wiecej niz 4 pliki"
 fi
 
-if [["${COUNTER}" -ge 2 ] && ["${COUNTER}" -lt 4 ]]; then
+if [[ ${COUNTER} -ge 2 ]] && [[ ${COUNTER} -le 4 ]]; then
     echo "coś piszemy"
 fi
 
+# create zip of TARGET_DIR
 DATA=$(date +"%Y-%m-%d")
 zip -r "bakap${DATA}.zip" "${TARGET_DIR}"
