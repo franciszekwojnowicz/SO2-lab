@@ -24,7 +24,8 @@ ITEMS=$(ls "${SOURCE_DIR}")
 for ITEM in ${ITEMS}; do
     if [[ -f  "${SOURCE_DIR}/${ITEM}" ]]; then
         mv "${SOURCE_DIR}/${ITEM}" "${TARGET_DIR}"
-    elif [[ -d  "${SOURCE_DIR}/${ITEM}" ]]; then
+    fi
+    if [[ -d  "${SOURCE_DIR}/${ITEM}" ]]; then
         cp -r "${SOURCE_DIR}/${ITEM}" "${TARGET_DIR}"
     fi
 done
