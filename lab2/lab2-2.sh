@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eu
 
 FIRST_DIR=${1:-dir1}
 SECOND_DIR=${2:-dir2}

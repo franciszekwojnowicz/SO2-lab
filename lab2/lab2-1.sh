@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eu
 
 TARGET_DIR=${1:-default}
 
