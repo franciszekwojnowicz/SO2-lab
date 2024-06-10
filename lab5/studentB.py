@@ -10,18 +10,22 @@ def ai_move(board):
             found_empty = False
     return board
 
+
 def get_user_move(board):
-    try:
-        player_move = int(input("give your move from 1 to 9: "))
-    except Exception as e:
-        print(e)
-    
-    temp = 1
-    for i in range(3):
-        for j in range(3):
-            if temp == player_move:
-                board[i][j] = "x"
-            temp =+ 1
+
+    good_move = True
+    while good_move:
+        try:
+            player_move = int(input("give your move from 1 to 25: "))
+        except Exception as e:
+            print(e)
+        
+        temp = 1
+        for i in range(3):
+            for j in range(3):
+                if temp == player_move and board[i][j] == "":
+                    board[i][j] = "x"
+                temp =+ 1
     return board
 
 def is_player_starting():
