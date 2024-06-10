@@ -1,6 +1,6 @@
 import random
 
-def api_move(board):
+def ai_move(board):
     found_empty = True
     while found_empty:
         i = random.randint(1,3)
