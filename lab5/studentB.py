@@ -16,7 +16,7 @@ def get_user_move(board):
     good_move = True
     while good_move:
         try:
-            player_move = int(input("give your move from 1 to 25: "))
+            player_move = int(input("give your move from 1 to 9: "))
         except Exception as e:
             print(e)
         
@@ -25,6 +25,7 @@ def get_user_move(board):
             for j in range(3):
                 if temp == player_move and board[i][j] == "":
                     board[i][j] = "x"
+                    good_move = False
                 temp =+ 1
     return board
 
